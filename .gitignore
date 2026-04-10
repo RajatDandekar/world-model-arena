@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+
+# Raw collected data (large, regenerable)
+**/data/raw/
+
+# Server backend (instructor-only)
+server/
+
+# Student submissions (uploaded, not tracked)
+submissions/
+
+# Supabase credentials (keep .env.example only)
+.env
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+tensorboard_logs/
+
+# Test/cache
+.pytest_cache/

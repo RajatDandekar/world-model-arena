@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Model Arena — Leaderboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --accent: #D97757;
+  --accent-light: #f3d5c8;
+  --accent-bg: rgba(217, 119, 87, 0.08);
+  --bg: #ffffff;
+  --bg-card: #fafafa;
+  --bg-hover: #f5f3f0;
+  --text: #1a1a1a;
+  --text-secondary: #666;
+  --text-muted: #999;
+  --border: #e5e5e5;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --radius: 12px;
+  --teal: #5a9e6f;
+  --blue: #4a7fb5;
+  --purple: #8b6bb5;
+  --red: #c75050;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Header bar ────────────────────────────────────────────────── */
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-logo {
+  height: 28px;
+  width: auto;
+}
+.header-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.header-title span { color: var(--accent); }
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.github-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.github-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Hero ──────────────────────────────────────────────────────── */
+.hero {
+  text-align: center;
+  padding: 56px 24px 48px;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.hero h1 span { color: var(--accent); }
+.hero .subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+
+.steps {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.step-card {
+  flex: 1;
+  min-width: 180px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  text-align: center;
+}
+.step-card .step-num {
+  display: inline-block;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 28px;
+  margin-bottom: 8px;
+}
+.step-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+.step-card p { font-size: 0.8rem; color: var(--text-secondary); }
+
+/* ── Getting Started ───────────────────────────────────────────── */
+.getting-started {
+  padding: 48px 0;
+  border-bottom: 1px solid var(--border);
+}
+.gs-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.gs-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.gs-header p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+.gs-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto 32px;
+}
+.gs-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 16px 20px;
+  text-align: center;
+  position: relative;
+}
+.gs-step .gs-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+.gs-step h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.gs-step p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.gs-step code {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  color: var(--accent);
+  background: var(--accent-bg);
+  padding: 4px 8px;
+  border-radius: 6px;
+  word-break: break-all;
+}
+.gs-cta {
+  text-align: center;
+}
+.gs-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(217, 119, 87, 0.3);
+}
+.gs-cta a:hover {
+  background: #c4654a;
+  box-shadow: 0 4px 14px rgba(217, 119, 87, 0.4);
+  transform: translateY(-1px);
+}
+.gs-cta a svg { width: 18px; height: 18px; }
+
+/* ── Section headers ──────────────────────────────────────────── */
+.section { padding: 48px 0; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.section-desc {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  max-width: 600px;
+}
+
+/* ── Matchup cards ────────────────────────────────────────────── */
+.matchups { display: flex; gap: 20px; flex-wrap: wrap; }
+.matchup-card {
+  flex: 1;
+  min-width: 320px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.matchup-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+.matchup-card.has-winner-left {
+  border-left: 3px solid var(--accent);
+}
+.matchup-card.has-winner-right {
+  border-right: 3px solid var(--accent);
+}
+.matchup-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  border-bottom: 1px solid var(--border);
+}
+.matchup-name {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.3;
+}
+.matchup-name.winner-name {
+  color: var(--accent);
+}
+.vs-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+.matchup-body {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+}
+.matchup-player {
+  flex: 1;
+  text-align: center;
+}
+.matchup-player video {
+  width: 100%;
+  border-radius: 8px;
+  background: #f0f0f0;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.matchup-stats {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.matchup-stats .stat-value { font-weight: 600; color: var(--text); }
+.matchup-footer {
+  padding: 12px 20px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.matchup-footer.winner { color: var(--accent); }
+.matchup-footer.draw { color: var(--text-muted); }
+.no-matchups {
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+/* ── Tables ───────────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+thead { background: var(--bg-card); }
+th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+th:hover { color: var(--accent); }
+th.sorted-asc::after { content: " \25B2"; font-size: 0.7rem; }
+th.sorted-desc::after { content: " \25BC"; font-size: 0.7rem; }
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover { background: var(--bg-hover); }
+
+.rank-cell {
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 48px;
+}
+.rank-1 { color: #d4a017; }
+.rank-2 { color: #8a8a8a; }
+.rank-3 { color: #b87333; }
+
+.name-cell { font-weight: 600; }
+.tag-cell {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.elo-cell { font-weight: 600; color: var(--accent); }
+.metric-good { color: var(--teal); }
+.metric-ok { color: var(--blue); }
+.metric-bad { color: var(--red); }
+
+.video-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+.video-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.expand-row td {
+  padding: 0;
+  border-bottom: 1px solid var(--border);
+}
+.expand-content {
+  padding: 12px 16px 12px 64px;
+  background: var(--bg-card);
+  font-size: 0.85rem;
+}
+.expand-content .map-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+.expand-content .map-item {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.expand-content .map-name {
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
+.expand-content .map-val {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-muted);
+}
+.empty-state p { font-style: italic; }
+
+/* ── Video modal ──────────────────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay.active { display: flex; }
+.modal-content {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 12px; right: 16px;
+  background: none; border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+.modal-content video {
+  width: 100%;
+  border-radius: 8px;
+}
+.modal-title {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ── How It Works ─────────────────────────────────────────────── */
+.pipeline {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 24px 0;
+}
+.pipeline-node {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  min-width: 120px;
+}
+.pipeline-node strong { display: block; font-size: 0.95rem; margin-bottom: 2px; }
+.pipeline-arrow {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+}
+
+.gap-explainer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+.gap-explainer code {
+  background: #f0ede8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+/* ── Footer ───────────────────────────────────────────────────── */
+.site-footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.footer-logo {
+  height: 24px;
+  width: auto;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+.site-footer p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+.site-footer a { color: var(--accent); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+.footer-links {
+  margin-top: 8px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+.footer-links a {
+  color: var(--text-muted);
+}
+
+/* ── Realtime badge ───────────────────────────────────────────── */
+.realtime-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--teal);
+  font-weight: 500;
+}
+.realtime-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* ── Loading ──────────────────────────────────────────────────── */
+.loading {
+  text-align: center;
+  padding: 48px;
+  color: var(--text-muted);
+}
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.8rem; }
+  .steps { flex-direction: column; align-items: center; }
+  .gs-steps { grid-template-columns: repeat(2, 1fr); }
+  .matchup-body { flex-direction: column; }
+  .pipeline { flex-direction: column; }
+  .pipeline-arrow { transform: rotate(90deg); }
+  .header-bar { padding: 10px 16px; }
+  .header-title { display: none; }
+}
+@media (max-width: 480px) {
+  .gs-steps { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Header Bar ────────────────────────────────────────────────── -->
+<header class="header-bar">
+  <div class="header-left">
+    <img src="vizuara-logo.png" alt="Vizuara" class="header-logo">
+    <div class="header-title">World Model <span>Arena</span></div>
+  </div>
+  <a href="https://github.com/vizuara/world-model-arena" target="_blank" class="github-link">
+    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    Fork on GitHub
+  </a>
+</header>
+
+<!-- ── Hero ──────────────────────────────────────────────────────── -->
+<section class="hero">
+  <h1>World Model <span>Arena</span></h1>
+  <p class="subtitle">Train a world model. Dream a policy. Race it for real.</p>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Train World Model</h3>
+      <p>Learn simulator physics from data</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Dream a Policy</h3>
+      <p>RL inside your model's imagination</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>Race for Real</h3>
+      <p>Deploy on MetaDrive and compete</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Getting Started ───────────────────────────────────────────── -->
+<div class="container">
+  <section class="getting-started">
+    <div class="gs-header">
+      <h2>Getting Started</h2>
+      <p>Four steps from zero to the leaderboard.</p>
+    </div>
+    <div class="gs-steps">
+      <div class="gs-step">
+        <div class="gs-num">1</div>
+        <h4>Fork & Clone</h4>
+        <p>Fork the repo, clone it locally, and <code>cd student_starter</code></p>
+      </div>
+      <div class="gs-step">
+        <div class="gs-num">2</div>
+        <h4>Install</h4>
+        <p>Create a conda env and install dependencies</p>
+        <code>pip install -r ../requirements.txt</code>
+      </div>
+      <div class="gs-step">
+        <div class="gs-num">3</div>
+        <h4>Collect + Train + Dream</h4>
+        <p>Run the 5-step pipeline: collect data, train WM, dream-train a policy, evaluate</p>
+      </div>
+      <div class="gs-step">
+        <div class="gs-num">4</div>
+        <h4>Submit</h4>
+        <p>One command evaluates and uploads to the leaderboard</p>
+        <code>python submit.py --tag my-v1</code>
+      </div>
+    </div>
+    <div class="gs-cta">
+      <a href="https://github.com/vizuara/world-model-arena" target="_blank">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Fork on GitHub
+      </a>
+    </div>
+  </section>
+</div>
+
+<div class="container">
+
+  <!-- ── Matchup Cards ────────────────────────────────────────────── -->
+  <section class="section">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:24px;">
+      <div>
+        <h2 class="section-title" style="margin-bottom:4px;">Head-to-Head Racing</h2>
+        <p class="section-desc" style="margin-bottom:0;">Top submissions racing side by side</p>
+      </div>
+      <div class="realtime-badge"><div class="realtime-dot"></div> Live updates</div>
+    </div>
+    <div id="matchups" class="matchups">
+      <div class="loading"><div class="spinner"></div>Loading matchups...</div>
+    </div>
+  </section>
+
+  <!-- ── Race Leaderboard ─────────────────────────────────────────── -->
+  <section class="section">
+    <h2 class="section-title">Race Leaderboard</h2>
+    <p class="section-desc">Ranked by ELO — computed from head-to-head route completion across all 5 maps.</p>
+    <div id="race-table" class="table-wrap">
+      <div class="loading"><div class="spinner"></div>Loading leaderboard...</div>
+    </div>
+  </section>
+
+  <!-- ── WM Quality Table ─────────────────────────────────────────── -->
+  <section class="section">
+    <h2 class="section-title">World Model Quality</h2>
+    <p class="section-desc">How well does each world model predict the real simulator?</p>
+    <div id="wm-table" class="table-wrap">
+      <div class="loading"><div class="spinner"></div>Loading WM metrics...</div>
+    </div>
+  </section>
+
+  <!-- ── How It Works ─────────────────────────────────────────────── -->
+  <section class="section">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-desc">The dream-real gap measures whether your world model actually learned physics.</p>
+    <div class="pipeline">
+      <div class="pipeline-node"><strong>Collect Data</strong>200 episodes</div>
+      <div class="pipeline-arrow">&rarr;</div>
+      <div class="pipeline-node"><strong>Train WM</strong>IRIS / DIAMOND</div>
+      <div class="pipeline-arrow">&rarr;</div>
+      <div class="pipeline-node"><strong>Dream Train</strong>RL in imagination</div>
+      <div class="pipeline-arrow">&rarr;</div>
+      <div class="pipeline-node"><strong>Real Eval</strong>5 maps &times; 4 eps</div>
+    </div>
+    <div class="gap-explainer">
+      <strong>Dream-Real Gap</strong> = <code>|dream_score &minus; real_return| / max(|real_return|, 1)</code><br>
+      A policy that scores huge in its own dream but crashes in reality means your WM is hallucinating.
+      A small gap (&lt;15%) means your WM actually learned physics. That's the number to watch.
+    </div>
+  </section>
+
+</div>
+
+<!-- ── Video Modal ──────────────────────────────────────────────── -->
+<div id="video-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-title" id="modal-title"></div>
+    <video id="modal-video" controls></video>
+  </div>
+</div>
+
+<!-- ── Footer ──────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <img src="vizuara-logo.png" alt="Vizuara" class="footer-logo"><br>
+  <p>World Model Arena — built with <a href="https://supabase.com">Supabase</a> by <a href="https://vizuara.ai">Vizuara</a></p>
+  <div class="footer-links">
+    <a href="https://github.com/vizuara/world-model-arena">GitHub</a>
+    <a href="https://vizuara.ai">Vizuara</a>
+    <a href="https://supabase.com">Supabase</a>
+  </div>
+</footer>
+
+<!-- ── Supabase Client ────────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// ── Config — set these to your Supabase project ──────────────────
+const SUPABASE_URL = 'https://kxdegyvfrnqavzrspsdi.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4ZGVneXZmcm5xYXZ6cnNwc2RpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MjYxMTAsImV4cCI6MjA5MTQwMjExMH0.1gALt2uoUtZ8bHd0DUWWZtAAWJtVhNppRmSCMch4EAk';
+
+const ELO_K = 32;
+const ELO_START = 1200;
+const MAPS = ['curve_a', 'chicane', 'long_straight', 'tight_s', 'oval'];
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let allSubmissions = [];
+let sortState = { race: { col: 'elo', dir: 'desc' }, wm: { col: 'wm_mse_1step', dir: 'asc' } };
+
+// ── ELO computation (client-side) ────────────────────────────────
+
+function expectedScore(ra, rb) {
+  return 1.0 / (1.0 + Math.pow(10, (rb - ra) / 400));
+}
+
+function matchScore(compA, compB) {
+  const diff = compA - compB;
+  if (Math.abs(diff) < 0.05) return 0.5;
+  return diff > 0 ? 1.0 : 0.0;
+}
+
+function computeELOs(submissions) {
+  // Group by creator_uid → keep best submission per user (highest route_completion)
+  const byUser = {};
+  for (const s of submissions) {
+    const uid = s.creator_uid;
+    if (!byUser[uid] || s.route_completion > byUser[uid].route_completion) {
+      byUser[uid] = s;
+    }
+  }
+  const best = Object.values(byUser);
+
+  // Initialize ELOs
+  const elos = {};
+  for (const s of best) elos[s.creator_uid] = ELO_START;
+
+  // Round-robin: every pair, every map
+  for (let i = 0; i < best.length; i++) {
+    for (let j = i + 1; j < best.length; j++) {
+      const a = best[i], b = best[j];
+      const scoresA = a.map_scores || {};
+      const scoresB = b.map_scores || {};
+      for (const m of MAPS) {
+        const sa = scoresA[m] || 0;
+        const sb_ = scoresB[m] || 0;
+        const ms = matchScore(sa, sb_);
+        const ea = expectedScore(elos[a.creator_uid], elos[b.creator_uid]);
+        const delta = ELO_K * (ms - ea);
+        elos[a.creator_uid] += delta;
+        elos[b.creator_uid] -= delta;
+      }
+    }
+  }
+
+  return { elos, best };
+}
+
+// ── Data fetching ────────────────────────────────────────────────
+
+async function fetchSubmissions() {
+  const { data, error } = await sb
+    .from('submissions')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Fetch error:', error);
+    return [];
+  }
+  return data || [];
+}
+
+// ── Render matchup cards ─────────────────────────────────────────
+
+function renderMatchups(best, elos) {
+  const el = document.getElementById('matchups');
+
+  if (best.length < 2) {
+    el.innerHTML = '<div class="no-matchups">Not enough submissions for matchups yet. Be the first to submit!</div>';
+    return;
+  }
+
+  // Sort by ELO, take top pairs
+  const sorted = [...best].sort((a, b) => (elos[b.creator_uid] || ELO_START) - (elos[a.creator_uid] || ELO_START));
+  const pairs = [];
+  for (let i = 0; i < Math.min(sorted.length - 1, 3); i++) {
+    pairs.push([sorted[i], sorted[i + 1]]);
+  }
+
+  el.innerHTML = pairs.map(([a, b]) => {
+    const eloA = Math.round(elos[a.creator_uid] || ELO_START);
+    const eloB = Math.round(elos[b.creator_uid] || ELO_START);
+    const compA = (a.route_completion || 0);
+    const compB = (b.route_completion || 0);
+
+    const aWins = compA > compB + 0.01;
+    const bWins = compB > compA + 0.01;
+    const winnerName = aWins ? a.creator_name : bWins ? b.creator_name : null;
+
+    const cardClass = aWins ? 'has-winner-left' : bWins ? 'has-winner-right' : '';
+    const footerClass = winnerName ? 'winner' : 'draw';
+    const footerText = winnerName
+      ? `\uD83C\uDFC6 ${esc(winnerName)} wins`
+      : 'Draw \u2014 within margin';
+
+    const nameAClass = aWins ? 'matchup-name winner-name' : 'matchup-name';
+    const nameBClass = bWins ? 'matchup-name winner-name' : 'matchup-name';
+
+    return `
+      <div class="matchup-card ${cardClass}">
+        <div class="matchup-header">
+          <div class="${nameAClass}">${esc(a.creator_name)}</div>
+          <div class="vs-badge">VS</div>
+          <div class="${nameBClass}">${esc(b.creator_name)}</div>
+        </div>
+        <div class="matchup-body">
+          <div class="matchup-player">
+            ${a.video_url ? `<video src="${esc(a.video_url)}" muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()"></video>` : '<div style="aspect-ratio:1;background:#f0f0f0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;">No video</div>'}
+            <div class="matchup-stats">
+              Route: <span class="stat-value">${(compA * 100).toFixed(1)}%</span><br>
+              ELO: <span class="stat-value">${eloA}</span>
+            </div>
+          </div>
+          <div class="matchup-player">
+            ${b.video_url ? `<video src="${esc(b.video_url)}" muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()"></video>` : '<div style="aspect-ratio:1;background:#f0f0f0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;">No video</div>'}
+            <div class="matchup-stats">
+              Route: <span class="stat-value">${(compB * 100).toFixed(1)}%</span><br>
+              ELO: <span class="stat-value">${eloB}</span>
+            </div>
+          </div>
+        </div>
+        <div class="matchup-footer ${footerClass}">${footerText}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── Render race leaderboard ──────────────────────────────────────
+
+function renderRaceTable(best, elos) {
+  const el = document.getElementById('race-table');
+  if (best.length === 0) {
+    el.innerHTML = '<div class="empty-state"><p>No submissions yet. Be the first!</p></div>';
+    return;
+  }
+
+  // Add ELO to each entry
+  const rows = best.map(s => ({
+    ...s,
+    elo: Math.round(elos[s.creator_uid] || ELO_START),
+  }));
+
+  // Sort
+  const { col, dir } = sortState.race;
+  rows.sort((a, b) => {
+    const va = a[col] ?? 0, vb = b[col] ?? 0;
+    return dir === 'desc' ? vb - va : va - vb;
+  });
+
+  const headerCols = [
+    { key: 'rank', label: '#', sortable: false },
+    { key: 'creator_name', label: 'Name', sortable: false },
+    { key: 'tag', label: 'Tag', sortable: false },
+    { key: 'elo', label: 'ELO' },
+    { key: 'mean_return', label: 'Return' },
+    { key: 'route_completion', label: 'Route %' },
+    { key: 'dream_real_gap', label: 'Gap' },
+    { key: 'wm_type', label: 'WM', sortable: false },
+    { key: 'video', label: '', sortable: false },
+  ];
+
+  const thHtml = headerCols.map(c => {
+    if (c.sortable === false) return `<th>${c.label}</th>`;
+    const cls = sortState.race.col === c.key ? `sorted-${sortState.race.dir}` : '';
+    return `<th class="${cls}" onclick="sortRace('${c.key}')">${c.label}</th>`;
+  }).join('');
+
+  const tbHtml = rows.map((s, i) => {
+    const rank = i + 1;
+    const rankCls = rank <= 3 ? `rank-cell rank-${rank}` : 'rank-cell';
+    const comp = s.route_completion != null ? (s.route_completion * 100).toFixed(1) + '%' : '\u2014';
+    const ret = s.mean_return != null ? s.mean_return.toFixed(1) : '\u2014';
+    const gap = s.dream_real_gap != null ? (s.dream_real_gap * 100).toFixed(1) + '%' : '\u2014';
+    const gapCls = s.dream_real_gap != null ? (s.dream_real_gap < 0.15 ? 'metric-good' : s.dream_real_gap < 0.30 ? 'metric-ok' : 'metric-bad') : '';
+    const videoBtn = s.video_url ? `<button class="video-btn" onclick="openModal('${esc(s.creator_name)} \u2014 ${esc(s.tag)}','${esc(s.video_url)}')">&#9654; Play</button>` : '';
+
+    return `
+      <tr onclick="toggleExpand(this, ${JSON.stringify(s.map_scores || {}).replace(/"/g, '&quot;')})">
+        <td class="${rankCls}">${rank}</td>
+        <td class="name-cell">${esc(s.creator_name)}</td>
+        <td class="tag-cell">${esc(s.tag)}</td>
+        <td class="elo-cell">${s.elo}</td>
+        <td>${ret}</td>
+        <td>${comp}</td>
+        <td class="${gapCls}">${gap}</td>
+        <td>${esc(s.wm_type || '\u2014')}</td>
+        <td>${videoBtn}</td>
+      </tr>
+    `;
+  }).join('');
+
+  el.innerHTML = `
+    <table>
+      <thead><tr>${thHtml}</tr></thead>
+      <tbody>${tbHtml}</tbody>
+    </table>
+  `;
+}
+
+// ── Render WM quality table ──────────────────────────────────────
+
+function renderWMTable(best) {
+  const el = document.getElementById('wm-table');
+  const withWM = best.filter(s => s.wm_mse_1step != null);
+
+  if (withWM.length === 0) {
+    el.innerHTML = '<div class="empty-state"><p>No world model submissions yet.</p></div>';
+    return;
+  }
+
+  const { col, dir } = sortState.wm;
+  withWM.sort((a, b) => {
+    const va = a[col] ?? Infinity, vb = b[col] ?? Infinity;
+    return dir === 'asc' ? va - vb : vb - va;
+  });
+
+  const headerCols = [
+    { key: 'rank', label: '#', sortable: false },
+    { key: 'creator_name', label: 'Name', sortable: false },
+    { key: 'wm_mse_1step', label: '1-Step MSE' },
+    { key: 'wm_mse_rollout', label: '15-Step MSE' },
+    { key: 'wm_reward_r2', label: 'Reward R\u00B2' },
+    { key: 'wm_done_f1', label: 'Done F1' },
+    { key: 'dream_real_gap', label: 'Gap' },
+    { key: 'wm_type', label: 'WM', sortable: false },
+  ];
+
+  const thHtml = headerCols.map(c => {
+    if (c.sortable === false) return `<th>${c.label}</th>`;
+    const cls = sortState.wm.col === c.key ? `sorted-${sortState.wm.dir}` : '';
+    return `<th class="${cls}" onclick="sortWM('${c.key}')">${c.label}</th>`;
+  }).join('');
+
+  const tbHtml = withWM.map((s, i) => {
+    const rank = i + 1;
+    const rankCls = rank <= 3 ? `rank-cell rank-${rank}` : 'rank-cell';
+    const mse1 = s.wm_mse_1step != null ? s.wm_mse_1step.toFixed(6) : '\u2014';
+    const mse15 = s.wm_mse_rollout != null ? s.wm_mse_rollout.toFixed(6) : '\u2014';
+    const r2 = s.wm_reward_r2 != null ? s.wm_reward_r2.toFixed(4) : '\u2014';
+    const f1 = s.wm_done_f1 != null ? s.wm_done_f1.toFixed(4) : '\u2014';
+    const gap = s.dream_real_gap != null ? (s.dream_real_gap * 100).toFixed(1) + '%' : '\u2014';
+    const gapCls = s.dream_real_gap != null ? (s.dream_real_gap < 0.15 ? 'metric-good' : s.dream_real_gap < 0.30 ? 'metric-ok' : 'metric-bad') : '';
+
+    return `
+      <tr>
+        <td class="${rankCls}">${rank}</td>
+        <td class="name-cell">${esc(s.creator_name)}</td>
+        <td>${mse1}</td>
+        <td>${mse15}</td>
+        <td>${r2}</td>
+        <td>${f1}</td>
+        <td class="${gapCls}">${gap}</td>
+        <td>${esc(s.wm_type || '\u2014')}</td>
+      </tr>
+    `;
+  }).join('');
+
+  el.innerHTML = `
+    <table>
+      <thead><tr>${thHtml}</tr></thead>
+      <tbody>${tbHtml}</tbody>
+    </table>
+  `;
+}
+
+// ── Sorting ──────────────────────────────────────────────────────
+
+function sortRace(col) {
+  if (sortState.race.col === col) {
+    sortState.race.dir = sortState.race.dir === 'desc' ? 'asc' : 'desc';
+  } else {
+    sortState.race.col = col;
+    sortState.race.dir = col === 'dream_real_gap' ? 'asc' : 'desc';
+  }
+  render();
+}
+
+function sortWM(col) {
+  if (sortState.wm.col === col) {
+    sortState.wm.dir = sortState.wm.dir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortState.wm.col = col;
+    // Lower is better for MSE/gap, higher for R²/F1
+    sortState.wm.dir = ['wm_reward_r2', 'wm_done_f1'].includes(col) ? 'desc' : 'asc';
+  }
+  render();
+}
+
+// ── Expand row (per-map breakdown) ───────────────────────────────
+
+function toggleExpand(tr, mapScores) {
+  // Don't expand if clicking video button
+  if (event.target.closest('.video-btn')) return;
+
+  const next = tr.nextElementSibling;
+  if (next && next.classList.contains('expand-row')) {
+    next.remove();
+    return;
+  }
+
+  // Remove any other expanded rows
+  document.querySelectorAll('.expand-row').forEach(r => r.remove());
+
+  if (!mapScores || Object.keys(mapScores).length === 0) return;
+
+  const expandTr = document.createElement('tr');
+  expandTr.className = 'expand-row';
+  const colSpan = tr.children.length;
+  expandTr.innerHTML = `
+    <td colspan="${colSpan}">
+      <div class="expand-content">
+        <div class="map-grid">
+          ${MAPS.map(m => `
+            <div class="map-item">
+              <div class="map-name">${m.replace('_', ' ')}</div>
+              <div class="map-val">${mapScores[m] != null ? (mapScores[m] * 100).toFixed(1) + '%' : '\u2014'}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </td>
+  `;
+  tr.after(expandTr);
+}
+
+// ── Video modal ──────────────────────────────────────────────────
+
+function openModal(title, url) {
+  event.stopPropagation();
+  document.getElementById('modal-title').textContent = title;
+  const vid = document.getElementById('modal-video');
+  vid.src = url;
+  document.getElementById('video-modal').classList.add('active');
+  vid.play();
+}
+
+function closeModal() {
+  const vid = document.getElementById('modal-video');
+  vid.pause();
+  vid.src = '';
+  document.getElementById('video-modal').classList.remove('active');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── Utility ──────────────────────────────────────────────────────
+
+function esc(s) {
+  if (s == null) return '';
+  const d = document.createElement('div');
+  d.textContent = String(s);
+  return d.innerHTML;
+}
+
+// ── Main render ──────────────────────────────────────────────────
+
+function render() {
+  const { elos, best } = computeELOs(allSubmissions);
+  renderMatchups(best, elos);
+  renderRaceTable(best, elos);
+  renderWMTable(best);
+}
+
+// ── Init ─────────────────────────────────────────────────────────
+
+async function init() {
+  allSubmissions = await fetchSubmissions();
+  render();
+
+  // Realtime subscription — auto-update when new submissions arrive
+  sb.channel('submissions-changes')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'submissions' }, (payload) => {
+      allSubmissions.unshift(payload.new);
+      render();
+    })
+    .subscribe();
+}
+
+init();
+</script>
+</body>
+</html>
