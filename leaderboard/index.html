@@ -950,7 +950,8 @@ async function fetchSubmissions() {
     console.error('Fetch error:', error);
     return [];
   }
-  return data || [];
+  // Filter out test entries
+  return (data || []).filter(s => !s.creator_uid.startsWith('__'));
 }
 
 // ── Render video showcase grid ────────────────────────────────────
