@@ -590,6 +590,106 @@ tr:hover { background: var(--bg-hover); }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ── Video Showcase Grid ──────────────────────────────────────── */
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.showcase-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.25s;
+}
+.showcase-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.showcase-video-wrap {
+  position: relative;
+  aspect-ratio: 1;
+  background: #1a1a1a;
+  overflow: hidden;
+}
+.showcase-video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.showcase-rank-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: white;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+}
+.showcase-rank-badge.rank-1 { background: rgba(212, 160, 23, 0.9); }
+.showcase-rank-badge.rank-2 { background: rgba(138, 138, 138, 0.9); }
+.showcase-rank-badge.rank-3 { background: rgba(184, 115, 51, 0.9); }
+.showcase-wm-pill {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+}
+.showcase-info {
+  padding: 14px 16px;
+}
+.showcase-name {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+.showcase-tag {
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.showcase-metrics {
+  display: flex;
+  gap: 16px;
+}
+.showcase-metric {
+  text-align: center;
+}
+.showcase-metric .label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+.showcase-metric .value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.showcase-metric .value.elo-value {
+  color: var(--text);
+}
+
 @media (max-width: 768px) {
   .hero h1 { font-size: 1.8rem; }
   .steps { flex-direction: column; align-items: center; }
@@ -599,9 +699,11 @@ tr:hover { background: var(--bg-hover); }
   .pipeline-arrow { transform: rotate(90deg); }
   .header-bar { padding: 10px 16px; }
   .header-title { display: none; }
+  .showcase-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
 }
 @media (max-width: 480px) {
   .gs-steps { grid-template-columns: 1fr; }
+  .showcase-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -683,6 +785,20 @@ tr:hover { background: var(--bg-hover); }
 </div>
 
 <div class="container">
+
+  <!-- ── Video Showcase ─────────────────────────────────────────────── -->
+  <section class="section">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:24px;">
+      <div>
+        <h2 class="section-title" style="margin-bottom:4px;">Top Submissions</h2>
+        <p class="section-desc" style="margin-bottom:0;">Watch the best dream-trained policies race on MetaDrive</p>
+      </div>
+      <div class="realtime-badge"><div class="realtime-dot"></div> Live updates</div>
+    </div>
+    <div id="showcase" class="showcase-grid">
+      <div class="loading"><div class="spinner"></div>Loading submissions...</div>
+    </div>
+  </section>
 
   <!-- ── Matchup Cards ────────────────────────────────────────────── -->
   <section class="section">
@@ -837,6 +953,56 @@ async function fetchSubmissions() {
   return data || [];
 }
 
+// ── Render video showcase grid ────────────────────────────────────
+
+function renderShowcase(best, elos) {
+  const el = document.getElementById('showcase');
+  const withVideo = [...best]
+    .filter(s => s.video_url)
+    .sort((a, b) => (elos[b.creator_uid] || ELO_START) - (elos[a.creator_uid] || ELO_START));
+
+  if (withVideo.length === 0) {
+    el.innerHTML = '<div class="empty-state"><p>No videos yet. Submit your first policy!</p></div>';
+    return;
+  }
+
+  el.innerHTML = withVideo.map((s, i) => {
+    const rank = i + 1;
+    const elo = Math.round(elos[s.creator_uid] || ELO_START);
+    const comp = s.route_completion != null ? (s.route_completion * 100).toFixed(1) : '0.0';
+    const gap = s.dream_real_gap != null ? (s.dream_real_gap * 100).toFixed(0) + '%' : '\u2014';
+    const rankCls = rank <= 3 ? `showcase-rank-badge rank-${rank}` : 'showcase-rank-badge';
+
+    return `
+      <div class="showcase-card" onclick="openModal('${esc(s.creator_name)} \u2014 ${esc(s.tag)}','${esc(s.video_url)}')">
+        <div class="showcase-video-wrap">
+          <video src="${esc(s.video_url)}" muted loop playsinline autoplay></video>
+          <div class="${rankCls}">#${rank}</div>
+          <div class="showcase-wm-pill">${esc(s.wm_type || 'none')}</div>
+        </div>
+        <div class="showcase-info">
+          <div class="showcase-name">${esc(s.creator_name)}</div>
+          <div class="showcase-tag">${esc(s.tag)}</div>
+          <div class="showcase-metrics">
+            <div class="showcase-metric">
+              <div class="label">Route</div>
+              <div class="value">${comp}%</div>
+            </div>
+            <div class="showcase-metric">
+              <div class="label">ELO</div>
+              <div class="value elo-value">${elo}</div>
+            </div>
+            <div class="showcase-metric">
+              <div class="label">Gap</div>
+              <div class="value">${gap}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 // ── Render matchup cards ─────────────────────────────────────────
 
 function renderMatchups(best, elos) {
@@ -882,14 +1048,14 @@ function renderMatchups(best, elos) {
         </div>
         <div class="matchup-body">
           <div class="matchup-player">
-            ${a.video_url ? `<video src="${esc(a.video_url)}" muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()"></video>` : '<div style="aspect-ratio:1;background:#f0f0f0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;">No video</div>'}
+            ${a.video_url ? `<video src="${esc(a.video_url)}" muted loop playsinline autoplay></video>` : '<div style="aspect-ratio:1;background:#f0f0f0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;">No video</div>'}
             <div class="matchup-stats">
               Route: <span class="stat-value">${(compA * 100).toFixed(1)}%</span><br>
               ELO: <span class="stat-value">${eloA}</span>
             </div>
           </div>
           <div class="matchup-player">
-            ${b.video_url ? `<video src="${esc(b.video_url)}" muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()"></video>` : '<div style="aspect-ratio:1;background:#f0f0f0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;">No video</div>'}
+            ${b.video_url ? `<video src="${esc(b.video_url)}" muted loop playsinline autoplay></video>` : '<div style="aspect-ratio:1;background:#f0f0f0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;">No video</div>'}
             <div class="matchup-stats">
               Route: <span class="stat-value">${(compB * 100).toFixed(1)}%</span><br>
               ELO: <span class="stat-value">${eloB}</span>
@@ -1133,6 +1299,7 @@ function esc(s) {
 
 function render() {
   const { elos, best } = computeELOs(allSubmissions);
+  renderShowcase(best, elos);
   renderMatchups(best, elos);
   renderRaceTable(best, elos);
   renderWMTable(best);
