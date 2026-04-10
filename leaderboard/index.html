@@ -107,8 +107,33 @@ body {
   font-size: 1.15rem;
   color: var(--text-secondary);
   max-width: 600px;
-  margin: 0 auto 32px;
+  margin: 0 auto 12px;
 }
+.bootcamp-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-light);
+  border-radius: 20px;
+  font-size: 0.88rem;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.bootcamp-badge a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.bootcamp-badge a:hover { text-decoration: underline; }
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+}
+.hero-desc a { color: var(--accent); text-decoration: none; }
+.hero-desc a:hover { text-decoration: underline; }
 
 .steps {
   display: flex;
@@ -527,6 +552,234 @@ tr:hover { background: var(--bg-hover); }
   font-size: 0.85rem;
 }
 
+/* ── MetaDrive Environment Cards ──────────────────────────────── */
+.env-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+.env-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.env-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.env-icon {
+  color: var(--blue);
+  flex-shrink: 0;
+}
+.env-card-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.env-card-body {
+  padding: 16px 20px;
+}
+.env-card-dim {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.env-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.env-detail {
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.env-detail-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.env-detail-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+.env-figure {
+  margin-top: 12px;
+}
+.env-figure img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.env-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 12px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Action axes */
+.action-axes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 8px 0;
+}
+.action-axis {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.axis-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.axis-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.axis-min, .axis-max {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 54px;
+}
+.axis-max { text-align: right; }
+.axis-track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  position: relative;
+}
+.axis-thumb {
+  position: absolute;
+  top: -5px;
+  width: 16px;
+  height: 16px;
+  background: var(--teal);
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transform: translateX(-50%);
+}
+
+/* Reward items */
+.reward-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.reward-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: white;
+}
+.reward-sign {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.reward-positive .reward-sign {
+  background: rgba(90, 158, 111, 0.12);
+  color: var(--teal);
+}
+.reward-negative .reward-sign {
+  background: rgba(199, 80, 80, 0.12);
+  color: var(--red);
+}
+.reward-item strong {
+  font-size: 0.82rem;
+  display: block;
+}
+.reward-formula {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+/* Figures strip */
+.env-figures-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+.env-figure-full {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: white;
+}
+.env-figure-full img {
+  width: 100%;
+  display: block;
+}
+
+/* Maps grid */
+.maps-section {
+  margin-top: 8px;
+}
+.maps-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.maps-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+.maps-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+.map-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 12px;
+  text-align: center;
+}
+.map-emoji {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+.map-card strong {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 2px;
+}
+.map-card span {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
 /* ── Footer ───────────────────────────────────────────────────── */
 .site-footer {
   text-align: center;
@@ -700,10 +953,13 @@ tr:hover { background: var(--bg-hover); }
   .header-bar { padding: 10px 16px; }
   .header-title { display: none; }
   .showcase-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .env-cards { grid-template-columns: 1fr; }
+  .maps-grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 480px) {
   .gs-steps { grid-template-columns: 1fr; }
   .showcase-grid { grid-template-columns: 1fr; }
+  .maps-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -725,6 +981,15 @@ tr:hover { background: var(--bg-hover); }
 <section class="hero">
   <h1>World Model <span>Arena</span></h1>
   <p class="subtitle">Train a world model. Dream a policy. Race it for real.</p>
+  <div class="bootcamp-badge">
+    Part of the <strong>World Models Bootcamp</strong> by <a href="https://vizuara.ai" target="_blank">Vizuara</a>
+  </div>
+  <p class="hero-desc">
+    This is a hands-on competition where you build a world model of a driving simulator using <strong>IRIS</strong> or <strong>DIAMOND</strong>,
+    train a reinforcement learning policy entirely inside your model's imagination, and then deploy it on the real
+    <a href="https://metadrive-simulator.readthedocs.io/" target="_blank">MetaDrive</a> simulator to see how well your dreams match reality.
+    The goal: learn how world models work by actually building one.
+  </p>
   <div class="steps">
     <div class="step-card">
       <div class="step-num">1</div>
@@ -849,6 +1114,143 @@ tr:hover { background: var(--bg-hover); }
       <strong>Dream-Real Gap</strong> = <code>|dream_score &minus; real_return| / max(|real_return|, 1)</code><br>
       A policy that scores huge in its own dream but crashes in reality means your WM is hallucinating.
       A small gap (&lt;15%) means your WM actually learned physics. That's the number to watch.
+    </div>
+  </section>
+
+  <!-- ── MetaDrive Environment ──────────────────────────────────────── -->
+  <section class="section">
+    <h2 class="section-title">The MetaDrive Environment</h2>
+    <p class="section-desc">MetaDrive is a lightweight driving simulator built on Panda3D. Here's what your world model needs to learn.</p>
+
+    <div class="env-cards">
+      <!-- Observation Space -->
+      <div class="env-card">
+        <div class="env-card-header">
+          <div class="env-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+          </div>
+          <h3>Observation Space</h3>
+        </div>
+        <div class="env-card-body">
+          <p class="env-card-dim">259-dimensional vector</p>
+          <div class="env-detail-grid">
+            <div class="env-detail">
+              <div class="env-detail-label">Vehicle State</div>
+              <div class="env-detail-desc">Position, velocity, heading, steering angle</div>
+            </div>
+            <div class="env-detail">
+              <div class="env-detail-label">Navigation</div>
+              <div class="env-detail-desc">Waypoints, checkpoints, distance & heading to goal</div>
+            </div>
+            <div class="env-detail">
+              <div class="env-detail-label">LiDAR</div>
+              <div class="env-detail-desc">240 rays detecting road edges, obstacles, and other vehicles</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Space -->
+      <div class="env-card">
+        <div class="env-card-header">
+          <div class="env-icon" style="color: var(--teal);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>
+          </div>
+          <h3>Action Space</h3>
+        </div>
+        <div class="env-card-body">
+          <p class="env-card-dim">2D continuous</p>
+          <div class="action-axes">
+            <div class="action-axis">
+              <div class="axis-label">Steering</div>
+              <div class="axis-bar">
+                <span class="axis-min">-1 (left)</span>
+                <div class="axis-track"><div class="axis-thumb" style="left:65%"></div></div>
+                <span class="axis-max">+1 (right)</span>
+              </div>
+            </div>
+            <div class="action-axis">
+              <div class="axis-label">Throttle / Brake</div>
+              <div class="axis-bar">
+                <span class="axis-min">-1 (brake)</span>
+                <div class="axis-track"><div class="axis-thumb" style="left:80%"></div></div>
+                <span class="axis-max">+1 (full gas)</span>
+              </div>
+            </div>
+          </div>
+          <p class="env-note">Your policy outputs these two values at each timestep. The world model must predict how the environment changes in response.</p>
+        </div>
+      </div>
+
+      <!-- Reward Structure -->
+      <div class="env-card">
+        <div class="env-card-header">
+          <div class="env-icon" style="color: var(--accent);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h3>Reward Structure</h3>
+        </div>
+        <div class="env-card-body">
+          <p class="env-card-dim">Dense + sparse signals</p>
+          <div class="reward-items">
+            <div class="reward-item reward-positive">
+              <span class="reward-sign">+</span>
+              <div>
+                <strong>Driving Reward</strong>
+                <span class="reward-formula">speed &times; cos(heading_error)</span>
+              </div>
+            </div>
+            <div class="reward-item reward-positive">
+              <span class="reward-sign">+</span>
+              <div>
+                <strong>Route Completion</strong>
+                <span class="reward-formula">bonus for each checkpoint reached</span>
+              </div>
+            </div>
+            <div class="reward-item reward-negative">
+              <span class="reward-sign">&minus;</span>
+              <div>
+                <strong>Crash Penalty</strong>
+                <span class="reward-formula">collision with obstacle or vehicle</span>
+              </div>
+            </div>
+            <div class="reward-item reward-negative">
+              <span class="reward-sign">&minus;</span>
+              <div>
+                <strong>Out-of-Road</strong>
+                <span class="reward-formula">penalty for leaving the drivable area</span>
+              </div>
+            </div>
+          </div>
+          <p class="env-note">Your world model must learn to predict these rewards accurately. A model that gives free rewards creates policies that exploit hallucinations.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Figures -->
+    <div class="env-figures-strip">
+      <div class="env-figure-full">
+        <img src="figures/metadrive_observation_space.png" alt="MetaDrive Observation Space — 259-dim vector with vehicle state, navigation, and LiDAR" loading="lazy">
+      </div>
+      <div class="env-figure-full">
+        <img src="figures/metadrive_action_space.png" alt="MetaDrive Action Space — 2D continuous steering and throttle" loading="lazy">
+      </div>
+      <div class="env-figure-full">
+        <img src="figures/metadrive_reward_structure.png" alt="MetaDrive Reward Structure — dense driving + sparse bonuses and penalties" loading="lazy">
+      </div>
+    </div>
+
+    <!-- 5 Maps -->
+    <div class="maps-section">
+      <h3 class="maps-title">5 Evaluation Maps</h3>
+      <p class="maps-desc">Every submission is tested on all 5 maps &times; 4 episodes. Route completion is averaged across all 20 runs.</p>
+      <div class="maps-grid">
+        <div class="map-card"><div class="map-emoji">&#x1F6E3;</div><strong>Curve A</strong><span>Gentle left curve</span></div>
+        <div class="map-card"><div class="map-emoji">&#x1F500;</div><strong>Chicane</strong><span>Quick left-right-left</span></div>
+        <div class="map-card"><div class="map-emoji">&#x2194;&#xFE0F;</div><strong>Long Straight</strong><span>Speed + lane keeping</span></div>
+        <div class="map-card"><div class="map-emoji">&#x27B0;</div><strong>Tight S</strong><span>Sharp S-curves</span></div>
+        <div class="map-card"><div class="map-emoji">&#x1F7E2;</div><strong>Oval</strong><span>Continuous loop</span></div>
+      </div>
     </div>
   </section>
 
