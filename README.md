@@ -12,7 +12,7 @@ Build an IRIS or DIAMOND world model from driving data, train a policy entirely 
 
 ```bash
 # 1. Fork this repo and clone it
-git clone https://github.com/<your-username>/world-model-arena.git
+git clone https://github.com/RajatDandekar/world-model-arena.git
 cd world-model-arena/student_starter
 
 # 2. Install dependencies
