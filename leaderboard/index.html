@@ -135,6 +135,44 @@ body {
 .hero-desc a { color: var(--accent); text-decoration: none; }
 .hero-desc a:hover { text-decoration: underline; }
 
+.hero-video-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 0 auto 36px;
+  max-width: 900px;
+}
+.hero-video-card {
+  flex: 1;
+  min-width: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.hero-video-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+.hero-video-card video {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+.hero-video-label {
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: center;
+  background: rgba(0,0,0,0.4);
+}
+@media (max-width: 700px) {
+  .hero-video-row { flex-direction: column; align-items: center; }
+  .hero-video-card { max-width: 320px; width: 100%; }
+}
+
 .steps {
   display: flex;
   gap: 16px;
@@ -990,6 +1028,20 @@ tr:hover { background: var(--bg-hover); }
     <a href="https://metadrive-simulator.readthedocs.io/" target="_blank">MetaDrive</a> simulator to see how well your dreams match reality.
     The goal: learn how world models work by actually building one.
   </p>
+  <div class="hero-video-row">
+    <div class="hero-video-card">
+      <video src="https://kxdegyvfrnqavzrspsdi.supabase.co/storage/v1/object/public/videos/seed/v4/player_a.mp4" muted loop playsinline autoplay></video>
+      <div class="hero-video-label">Dream-trained policy racing on MetaDrive</div>
+    </div>
+    <div class="hero-video-card">
+      <video src="https://kxdegyvfrnqavzrspsdi.supabase.co/storage/v1/object/public/videos/seed/v4/baseline_diamond.mp4" muted loop playsinline autoplay></video>
+      <div class="hero-video-label">Baseline DIAMOND world model</div>
+    </div>
+    <div class="hero-video-card">
+      <video src="https://kxdegyvfrnqavzrspsdi.supabase.co/storage/v1/object/public/videos/seed/v4/player_b.mp4" muted loop playsinline autoplay></video>
+      <div class="hero-video-label">IRIS model with extended context</div>
+    </div>
+  </div>
   <div class="steps">
     <div class="step-card">
       <div class="step-num">1</div>
